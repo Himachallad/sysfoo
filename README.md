@@ -1,2 +1,2 @@
 # sysfoo
-Sample java webapp with maven which prints system info
+Sample java webapp with maven which prints system info updated
