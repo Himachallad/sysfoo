@@ -62,6 +62,7 @@ pipeline {
     }
 
     stage('Docker dev') {
+      agent any
       steps {
         sh 'docker-compose up -d'
       }
