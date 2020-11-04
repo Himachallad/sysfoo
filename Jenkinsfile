@@ -2,12 +2,14 @@ pipeline {
   agent any
   stages {
     stage('build') {
+      when { not { branch 'master' } }
       steps {
         sh 'mvn compile'
       }
     }
 
     stage('test') {
+      when { { branch 'master' } }
       steps {
         sh 'mvn clean test'
       }
