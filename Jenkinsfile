@@ -1,6 +1,5 @@
 pipeline {
   agent none
-  
   stages {
     stage('build') {
       agent {
@@ -27,12 +26,14 @@ pipeline {
     }
 
     stage('package') {
-      when { branch 'master' }
       agent {
         docker {
           image 'maven:3.6.3-jdk-11-slim'
         }
 
+      }
+      when {
+        branch 'master'
       }
       steps {
         sh 'mvn package -DskipTests'
@@ -41,7 +42,9 @@ pipeline {
     }
 
     stage('Docker Build and Publish.') {
-      when { branch 'master' }
+      when {
+        branch 'master'
+      }
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
@@ -55,6 +58,12 @@ pipeline {
           }
         }
 
+      }
+    }
+
+    stage('Docker dev') {
+      steps {
+        sh 'docker-compose up -d'
       }
     }
 
